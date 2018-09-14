@@ -38,59 +38,6 @@ class BinaryTree:
         else:
             new_node.right_child = self.right_child
             self.right_child = new_node
-
-    """
-    Pre-order DFS traversal 
-    """
-    def pre_order(self):
-        print(self.value)
-        
-        if self.left_child:
-            self.left_child.pre_order()
-            
-        if self.right_child:
-            self.right_child.pre_order()
-    
-    """
-    In-order DFS traversal
-    """
-    def in_order(self):
-        if self.left_child:
-            self.left_child.in_order()
-            
-        print(self.value)
-        
-        if self.right_child:
-            self.right_child.in_order()
-    
-    """
-    Post-order DFS traversal
-    """
-    def post_order(self):
-        if self.left_child:
-            self.left_child.post_order()
-            
-        if self.right_child:
-            self.right_child.post_order()
-            
-        print(self.value)
-    
-    """
-    BFS Traversal : Using queue 
-    """
-    def breadth_first_search(self):
-        q = Queue()
-        q.put(self)
-        
-        while not q.empty():
-            cur_node = q.get()
-            print(cur_node.value)
-            
-            if cur_node.left_child:
-                q.put(cur_node.left_child)
-            
-            if cur_node.right_child:
-                q.put(cur_node.right_child)
             
     
 #Create a binary tree
