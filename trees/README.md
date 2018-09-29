@@ -58,7 +58,7 @@ DFS explores a path all the way to a leaf before backtracking and exploring anot
 	2 Post-order : Left -  Right - Root
 	3 In-order : Left - Root - Right
 
-**** Inorder traversal reads the element in ascending order and for descending order do traversal in Right - Root - Left order. *****
+Inorder traversal reads the element in ascending order and for descending order do traversal in Right - Root - Left order.
 
 
 ### Pre-order DFS traversal
