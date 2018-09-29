@@ -53,13 +53,13 @@ There are two options for tree traversal: Depth-First Search (DFS) and Breadth-F
 
 BFS traverses the tree level by level and depth by depth.
 
-DFS explores a path all the way to a leaf before backtracking and exploring another path. There are three types of DFS: 
+DFS explores a path all the way to a leaf before backtracking and exploring another path. There are three types of DFS.
+
 	1. Pre-order : Root - Left - Right
 	2. Post-order : Left -  Right - Root
 	3. In-order : Left - Root - Right
 
 Inorder traversal reads the element in ascending order and for descending order do traversal in Right - Root - Left order.
-
 
 ### Pre-order DFS traversal
 
@@ -87,34 +87,34 @@ Inorder traversal reads the element in ascending order and for descending order 
 
 
 ## Binary Search Tree
-- A binary search tree is a sorted or ordered binary trees, and it keeps its values in sorted order, so that lookup and othe operations can be performed in O(log(n)). The property of a binary search tree is that the left child value is less than the root node and the right child value is greater than that of root node.
+- A binary search tree is a sorted or ordered binary trees, so that lookup and othe operations can be performed in O(log(n)). The property of a binary search tree is that the left child value is less than the root node and the right child value is greater than that of root node.
 
 ### Insertion in Binary search trees
-1 Is the new node value greater or smaller than the current node?
+1. Is the new node value greater or smaller than the current node?
 
-2 If the value of the new node is greater than the current node, go to the right subtree. If the current node doesn't have a right child, inser it there, or else go to step 1.
+2. If the value of the new node is greater than the current node, go to the right subtree. If the current node doesn't have a right child, inser it there, or else go to step 1.
 
-3 If the value of the new node is smaller than the current node, go to the left subtree. If the current node doesn't have a left child, insert it there, or else go to step 1.
+3. If the value of the new node is smaller than the current node, go to the left subtree. If the current node doesn't have a left child, insert it there, or else go to step 1.
 
 ### Search in Binary Search Trees
 - First we have our root node. All the left subtree nodes will have smaller values than the root node. And all the right subtree nodes will have values greater than the root node.
 
-1 Start from the root node. Is the given value smaller than the current node? If yes, then search for it in the left subtree.
+1. Start from the root node. Is the given value smaller than the current node? If yes, then search for it in the left subtree.
 
-2 Is the given value greater than the current node? If yes, then serach for it in the right subtree.
+2. Is the given value greater than the current node? If yes, then serach for it in the right subtree.
 
-3 If both 1 and 2 is false, compare the given value with the current node. If they are equal, report that the tree has the given value, else the tree don't have it.
+3. If both 1 and 2 is false, compare the given value with the current node. If they are equal, report that the tree has the given value, else the tree don't have it.
 
 ## Deletion or removing a node
 Deletion is a more complex task in a BST because we need to handle differen case.
 
-1 Case 1. If we want to remove a node with no child or a leaf node
+1. Case 1. If we want to remove a node with no child or a leaf node
 	If the node we want to delete has no children, then we simply delete it. The tree does not needs to be modified in this case.
 
-2 Case 2. If we want to remove a node with only one child left or right
+2. Case 2. If we want to remove a node with only one child left or right
 	Here, the tree needs to be modified before deletion. If we are going to delete a current node with a parent node and a child node then, the parent node needs to point to the child node before the current node is deleted.
 
-3 Case 3. If we want to remove a node with two child
+3. Case 3. If we want to remove a node with two child
 	When the current node has two child, we can make the deletion in two possible ways. We either find the minimum value in the right subtree and replace the current node with it and then delete the current node or find the maximum value in the left subtree and replace the current node with and then delete the current node. Either of these cases will results in lesser balanced trees in the long run.
 
 
