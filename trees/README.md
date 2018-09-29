@@ -54,9 +54,9 @@ There are two options for tree traversal: Depth-First Search (DFS) and Breadth-F
 BFS traverses the tree level by level and depth by depth.
 
 DFS explores a path all the way to a leaf before backtracking and exploring another path. There are three types of DFS: 
-	1 Pre-order : Root - Left - Right 
-	2 Post-order : Left -  Right - Root
-	3 In-order : Left - Root - Right
+	1. Pre-order : Root - Left - Right
+	2. Post-order : Left -  Right - Root
+	3. In-order : Left - Root - Right
 
 Inorder traversal reads the element in ascending order and for descending order do traversal in Right - Root - Left order.
 
