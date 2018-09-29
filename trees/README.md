@@ -1,12 +1,31 @@
 # Trees and it's elements
 
--A tree is a collection of entities called nodes. Nodes are connected by edges. Each node contains a value or data, and it may or may not have a child node.
+- A tree T is a set of nodes that form a directed acyclic graph such that:
+	1. Each non-empty tree has a root node and zero or more subtrees
+	2. Each sub-tree is a tree
+	3. An internal node is connected to its children by a directed edge.
 
--The first node of the tree is called the root. If the root is connected by another node, then the root is the parent node of the connected node and the connected node is the child of root.
+Nodes are connected by edges, and each node in a tree has only one parent. Each node contains a value or data, and it may or may not have a child node.
+
+- The first node of the tree is called the root. If the root is connected to another node, then the root is the parent node of the connected node and the connected node is the child of root.
 
 - Leaves are the last nodes on a tree. They are nodes without children.
 
-- The height of a tree is the length of the longest path to a leaf. The depth of a node is the length of the path to its root.
+- Nodes with at least one child is an internal node.
+
+- Nodes with the same parent are siblings.
+
+- The length of a path is the number of edges in the path.
+
+- There is exactly one path from the root to each node in a tree.
+
+- The height of a tree is the length of the longest path to a leaf. 
+
+- The depth of a node is the length of the path to its root.
+
+- The height of anode ni is the length of the longest path under ni's subtree.
+
+- Height of the tree = Height of root = Depth of tree
 
 ## Binary Trees
 
@@ -35,9 +54,12 @@ There are two options for tree traversal: Depth-First Search (DFS) and Breadth-F
 BFS traverses the tree level by level and depth by depth.
 
 DFS explores a path all the way to a leaf before backtracking and exploring another path. There are three types of DFS: 
-	1 Pre-order
-	2 Post-order
-	3 In-order
+	1 Pre-order : Root - Left - Right 
+	2 Post-order : Left -  Right - Root
+	3 In-order : Left - Root - Right
+
+**** Inorder traversal reads the element in ascending order and for descending order do traversal in Right - Root - Left order. *****
+
 
 ### Pre-order DFS traversal
 
