@@ -11,17 +11,22 @@ class List
 {
 	private:
 		Node * mpHead;
+		Node * mpTail;
 		Node * makeNode(int data);
+		Node * searchNode(int toSearch);
 	
 	public:
 		// Default constructor //
-		List(Node * node = nullptr);
+		List();
 
 		// Default destructor //
 		~List();
 
 		// Copy constructor //
 		List(List const & refList);
+
+		// Overloaded assignment operator //
+		List & operator=(List const & rhs);
 
 		// Delete node at the front//
 		bool deleteAtFront();
@@ -36,10 +41,22 @@ class List
 		bool insertAtFront(int newData);
 
 		// Insert node at back //
-		bool insetAtBack(int newData);
+		bool insertAtBack(int newData);
 
 		// search for a node //
 		bool search(int toSearch);
 
+		// print the list //
+		void printListFromBack() const;
+
+		void printListFromFront() const;
+
+		// Get data of the front and back node //
+		int getHeadNodeValue() const;
+
+		int getTailNodeValue() const;
+
+		// Get the head pointer of the list //
+		Node * getHeadPtr() const;
 };
 

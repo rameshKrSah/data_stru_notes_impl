@@ -10,7 +10,8 @@ class Node
 {
 	private:
 		int mData;
-		Node *mpNext;
+		Node * mpNext;
+		Node * mpPrev;
 	
 	public:
 		// Default constructor//
@@ -27,10 +28,14 @@ class Node
 
 		Node * getNextPtr() const;
 
+		Node * getPrevPtr() const;
+
 		// Setters //
 		void setData(int newData);
 
 		void setNextPtr(Node * newNext);
+
+		void setPrevPtr(Node * newPrev);
 };
 
 

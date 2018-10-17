@@ -5,6 +5,7 @@ Node::Node(int newData)
 {
 	mData = newData;
 	mpNext = nullptr;
+	mpPrev = nullptr;
 }
 
 // Default destructor //
@@ -30,6 +31,10 @@ Node * Node::getNextPtr() const
 	return this->mpNext;
 }
 
+Node * Node::getPrevPtr() const
+{
+	return this->mpPrev;
+}
 
 // Setters //
 void Node::setData(int newData)
@@ -40,6 +45,11 @@ void Node::setData(int newData)
 void Node::setNextPtr(Node * newNext)
 {
 	mpNext = newNext;
+}
+
+void Node::setPrevPtr(Node * newPrev)
+{
+	mpPrev = newPrev;
 }
 
 
