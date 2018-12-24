@@ -39,3 +39,47 @@ undirected graph, if vertex j is in the list Ai, then i will be in the list Aj.
 
 The space complexity of adjacency list is **O(E + V)** because in an adjacency list information is stored only for those
 edges that actually exist in the graph.
+
+
+## Graph Traversal
+Graph traversal means visiting every vertex and edge exactly once in a well-defined order. There are two main types of 
+traversal, Breadth First Search (BFS) and Depth First Search (DFS).
+
+### Breadth First Search (BFS)
+Given a graph G = (V, E) and a source node s, breadth first search systematically explores the edges of G to discover 
+vertex that is reachable from s. The algorithm discovers all vertices at distance k from s before discovering any 
+vertices at distance k + 1. BFS computes the distance from from s to each reachable nodes and also produces a breadth
+first tree with root s. For any vertex v reachable from s, the path in the breadth first tree from s to v corresponds 
+to the shortest path from s to v in G.
+
+Here is an approach to BFS:
+```
+BFS(G, s)
+	for all v in V[G] do
+		visited[v] = false
+		parent[v] = none
+		distance[v] = NAN
+	end for
+
+	Q := EmptyQueue
+
+	visited[s] = true
+	distance[s] = 0
+
+	Enqueue(Q, s)
+
+	while not Empty(Q) do
+		u := Dequeue(Q)
+
+		for all w in AdjacencyList[u] do
+			if visited[w] == false do
+				visited[w] = true
+				distance[w] = distance[u] + 1
+				parent[w] = u
+				Enqueue(Q, w)
+			end if
+		end for
+	end while
+
+```
+

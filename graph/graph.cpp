@@ -1,4 +1,6 @@
 #include "graph.h"
+#include <queue>
+#include <cmath>
 
 /*
  * @brief: 	Constructor with arguments 
@@ -195,4 +197,125 @@ void Graph::showAdjacencyList() const
 		cout << (*(mpAdj + i)).at((*(mpAdj + i)).size() - 1) << endl;
 	}
 }
+
+/*
+ * brief: 	Perfrom Breadth first search from the given source node 
+ * param: 	Source node, unsigned int
+ * return: 	None
+ */
+void Graph::breadthFirstSearch(unsigned int sourceNode)
+{
+	if(sourceNode < getVertices())
+	{
+		// given source node within the vertices in the Graph
+		// data structures for keeping track of distance, parent, and visited flag
+		int * distance = new int[getVertices()];
+		int * parent =  new int[getVertices()];
+		bool * visited = new bool[getVertices()];
+
+		// Queue to hold the nodes as they are explored 
+		std::queue <int> Q;
+
+		// default values for all the nodes
+		for(int i = 0; i < getVertices(); i++)
+		{
+			distance[i] = int(std::nan("o"));
+			parent[i] = int(std::nan("i"));
+			visited[i]= false;
+		}
+
+		// set the values for the source node 
+		distance[sourceNode] = 0;
+		visited[sourceNode] = true;
+
+		// push the source node in the queue
+		Q.push(sourceNode);
+
+		// the traversal
+		while(!Q.empty())
+		{
+			unsigned int u = Q.front();
+			Q.pop();
+
+			cout << u << "  ";
+
+			vector <int> * Adj = (mpAdj + u);
+
+			for(int i = 0; i < (*Adj).size(); i++)
+			{
+				unsigned int w = (*Adj).at(i);
+
+				if(visited[w] == false)
+				{
+					visited[w] = true;
+					parent[w] = u;
+					distance[w] = distance[u] + 1;
+					Q.push(w);
+				}
+			}
+		}
+
+	}
+	else
+	{
+		cout << "Invalid source node " << endl;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

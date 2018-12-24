@@ -35,6 +35,10 @@ class Graph
 
 		void showAdjacencyList() const;
 
+		void breadthFirstSearch(unsigned int sourceNode);
+
+
+
 
 	private:
 		bool createAdjList(void);

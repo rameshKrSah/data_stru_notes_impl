@@ -21,6 +21,9 @@ int main()
 
 	G.showAdjacencyList();
 
+	cout << "Breadth first search with source node 2 " << endl;
+	G.breadthFirstSearch(2);
+
 	return 0;
 
 }
