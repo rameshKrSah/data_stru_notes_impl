@@ -37,13 +37,19 @@ class Graph
 
 		void breadthFirstSearch(unsigned int sourceNode);
 
+		void addEdge(unsigned int fromNode, unsigned int toNode);
 
-
+		void depthFirstSearch(unsigned int sourceNode);
 
 	private:
 		bool createAdjList(void);
 
 		bool deleteAdjList(void);
+
+		void depthFirstSearchStack(unsigned int s, bool visited[], int parent[]);
+
+		void depthFirstSearchRecursive(unsigned int s, bool visited[], int parent[]);
+
 
 };
 

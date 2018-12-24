@@ -1,5 +1,6 @@
 #include "graph.h"
 #include <queue>
+#include <stack>
 #include <cmath>
 
 /*
@@ -177,6 +178,44 @@ void Graph::buildGraph(vector <int> * pAdj)
 
 }
 
+/*
+ * brief: 	Add an edge in the graph
+ * param: 	To vertex and From vertex.
+ * return: 	None
+ */
+void Graph::addEdge(unsigned int fromNode, unsigned int toNode)
+{
+	if(mpAdj == nullptr)
+	{
+		if(!this->createAdjList())
+		{
+			cout << "Memory allocation failed " << endl;
+			return;
+		}
+	}
+
+
+	if((fromNode < mVertices) && (toNode < mVertices))
+	{
+		for(int i = 0; i < (*(mpAdj + fromNode)).size(); i++)
+		{
+			if((*(mpAdj + fromNode)).at(i) == toNode)
+			{
+				// edge already present in the graph
+				return;
+			}
+
+		}
+
+		// the edge is not present in the graph, add it now
+		(*(mpAdj + fromNode)).push_back(toNode);
+	}
+	else
+	{
+		cout << "Invalid vertices given, cannot add the edge. " << endl;
+	}
+}
+
 
 /*
  * brief: 	Show the adjacency list
@@ -255,13 +294,120 @@ void Graph::breadthFirstSearch(unsigned int sourceNode)
 			}
 		}
 
+
+		delete distance;
+		delete parent;
+		delete visited;
+
 	}
 	else
 	{
-		cout << "Invalid source node " << endl;
+		cout << "BFS : Invalid source vertex." << endl;
 	}
 }
 
+/*
+ * brief: 	Depth first search using stack 
+ * param: 	Source node, visited array, and parent array
+ * return: 	None
+ */
+void Graph::depthFirstSearchStack(unsigned int s, bool visited[], int parent[])
+{
+
+	// empty stack
+	std::stack <int> S;
+	
+	visited[s] = true;
+	S.push(s);
+
+	while(!S.empty())
+	{
+		unsigned int u = S.top();
+		S.pop();
+
+		cout << u << "  ";
+		vector <int> * adj = (mpAdj + u);
+
+		for(int i = 0; i < (*adj).size(); i++)
+		{
+			unsigned int w = (*adj).at(i);
+			if(visited[w] == false)
+			{
+				S.push(u);
+				visited[w] = true;
+				parent[w] = u;
+				S.push(w);
+			}
+		}
+	}
+
+}
+
+/*
+ * brief: 	Depth first search recusive approach
+ * param: 	Source node, visited array, and parent array
+ * return: 	None
+ */
+void Graph::depthFirstSearchRecursive(unsigned int s, bool visited[], int parent[])
+{
+	visited[s] = true;
+	cout << s << "  ";
+
+	vector <int> * u = (mpAdj + s);
+
+	for(int i = 0; i < (*u).size(); i++)
+	{
+		unsigned int w = (*u).at(i);
+
+		if(visited[w] == false)
+		{
+			parent[w] = s;
+			depthFirstSearchRecursive(w, visited, parent);
+		}
+	}
+}
+
+/*
+ * brief: 	Depth Search from the given source node
+ * param: 	Source node, unsigned int
+ * return: 	None
+ */
+void Graph::depthFirstSearch(unsigned int sourceNode)
+{
+	if(sourceNode < getVertices())
+	{
+		// given source node within the vertices in the Graph
+		// data structures for keeping track of parent, and visited flag
+		int * parent =  new int[getVertices()];
+		bool * visited = new bool[getVertices()];
+
+
+		// default values for all the nodes
+		for(int i = 0; i < getVertices(); i++)
+		{
+			parent[i] = int(std::nan("i"));
+			visited[i]= false;
+		}
+
+		// call either the recursive or the stack function for DFS
+		depthFirstSearchRecursive(sourceNode, visited, parent);
+
+		/*
+		for(int i = 0; i < getVertices(); i++)
+		{
+			if(visited[i] == false)
+			{
+				depthFirstSearchRecursive(i, visited, parent);
+			}
+		}
+		*/
+
+	}
+	else
+	{
+		cout << "DFS : Invalid source vertex" << endl;
+	}
+}
 
 
 
