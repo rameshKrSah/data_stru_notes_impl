@@ -228,12 +228,15 @@ void Graph::showAdjacencyList() const
 	{
 		cout << "Adjacency list of node " << i << " : ";
 
-		for(int j = 0; j < (*(mpAdj + i)).size() - 1; j++)
+		if(!(*(mpAdj + i)).empty())
 		{
-			cout << (*(mpAdj + i)).at(j) << " --> ";
-		}
+			for(int j = 0; j < (*(mpAdj + i)).size() - 1; j++)
+			{
+				cout << (*(mpAdj + i)).at(j) << " --> ";
+			}
 
-		cout << (*(mpAdj + i)).at((*(mpAdj + i)).size() - 1) << endl;
+			cout << (*(mpAdj + i)).at((*(mpAdj + i)).size() - 1) << endl;
+		}
 	}
 }
 
@@ -402,6 +405,9 @@ void Graph::depthFirstSearch(unsigned int sourceNode)
 		}
 		*/
 
+		delete parent;
+		delete visited;
+
 	}
 	else
 	{
@@ -409,7 +415,80 @@ void Graph::depthFirstSearch(unsigned int sourceNode)
 	}
 }
 
+/*
+ * brief: 	Run topological sort
+ * param: 	Vertex, visited boolean array, and a Stack 
+ * return: 	None
+ */
+void Graph::topologicalSort(unsigned int vertex, bool visited[], std::stack<int> & Stack)
+{
+	visited[vertex] = true;
 
+	vector <int> * u = (mpAdj + vertex);
+
+	for(int i = 0; i < (*u).size(); i++)
+	{
+		unsigned int w = (*u).at(i);
+
+		if(visited[w] == false)
+		{
+			topologicalSort(w, visited, Stack);
+		}
+	}
+
+
+	// finally push the vertex to the stack
+	Stack.push(vertex);
+}
+
+
+/*
+ * brief: 	Topological sort of the given graph
+ * param: 	None
+ * Return: 	None
+ */
+void Graph::topologicalSort()
+{
+	if(mpAdj != nullptr)
+	{
+		// A valid graph present 
+		
+		bool * visited = new bool[getVertices()];
+
+		// default values
+		for(int i = 0; i < getVertices(); i++)
+		{
+			visited[i] = false;
+		}
+
+
+		// stack to hold tht topological ordering
+		std::stack <int> Stack;
+
+		// run the topological sort
+		for(unsigned int i = 0; i < getVertices(); i++)
+		{
+			if(visited[i] == false)
+			{
+				topologicalSort(i, visited, Stack);
+			}
+		}
+
+		// show the ordering
+		while(!Stack.empty())
+		{
+			cout << Stack.top() << "  ";
+			Stack.pop();
+		}
+
+		cout << endl;
+
+	}
+	else
+	{
+		cout << "Topological sort : Invalid graph " << endl;
+	}
+}
 
 
 

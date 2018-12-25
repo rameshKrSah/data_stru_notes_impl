@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <stack>
 
 using std::cin;
 using std::cout;
@@ -41,6 +42,8 @@ class Graph
 
 		void depthFirstSearch(unsigned int sourceNode);
 
+		void topologicalSort();
+
 	private:
 		bool createAdjList(void);
 
@@ -49,6 +52,8 @@ class Graph
 		void depthFirstSearchStack(unsigned int s, bool visited[], int parent[]);
 
 		void depthFirstSearchRecursive(unsigned int s, bool visited[], int parent[]);
+
+		void topologicalSort(unsigned int vertex, bool visited[], std::stack <int> & Stack);
 
 
 };

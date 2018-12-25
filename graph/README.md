@@ -177,3 +177,19 @@ edge, check it doesn’t link two vertices of the same color. The first vertex i
 6. Finding Strongly Connected Components of a graph  
 A directed graph is called strongly connected if there is a path from each vertex in the graph to every other vertex. 
 
+
+## Topological Sort
+Topological sorting of vertices of a Directed Acyclic Graph is an ordering of the vertices *v1, v2, v3, ... , vn* in 
+such a way, that if there is an edge directed towards vertex *vi* from vertex *vj*, then *vi* comes before *vj* in the 
+ordering.  
+There are multiple topological sorting possible for a graph, i.e., **Topological sort is a permutation of vertices.**
+**In order to have topological sorting the graph must not contain any cycles.** 
+
+We can modify depth first search to find topological sorting of a graph. In DFS we start from a vertex, we first print 
+it and then recursively call DFS for its adjacent vertices. In topological sorting, we use a temporary stack. We don't
+print the vertex immediately, instead we first reccursively call topological sort for all its adjacent vertices, then 
+push it to the stack. Finally, print the contents of the stack to get the topological ordering. Note that a vertex is 
+pushed to the stack only when all of its adjacent vertices (and their adjacent vertices and so on) are already in the
+stack.
+
+
