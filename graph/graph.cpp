@@ -2,15 +2,18 @@
 #include <queue>
 #include <stack>
 #include <cmath>
+#include <bits/stdc++.h>
+#include <set>
 
 /*
  * @brief: 	Constructor with arguments 
 */
-Graph::Graph(unsigned int V, unsigned int E)
+Graph::Graph(unsigned int V, unsigned int E, bool isWeighted)
 {
 	mpAdj = nullptr;
 	setVertices(V);
 	setEdges(E);
+	mIsWeighted = isWeighted;
 	createAdjList();
 }
 
@@ -101,7 +104,8 @@ bool Graph::createAdjList()
 			deleteAdjList();
 		}
 
-		mpAdj = new vector <int> [this->getVertices()];
+		mpAdj = new vector <std::pair <int, int> > [this->getVertices()];
+
 		cout << "Size of Adjacency list " << (mpAdj)->size() << endl;
 
 		if(mpAdj != nullptr)
@@ -137,7 +141,7 @@ bool Graph::deleteAdjList()
  * param: 	Pointer to the adjacency list if any else nullptr
  * return: 	None
  */
-void Graph::buildGraph(vector <int> * pAdj)
+void Graph::buildGraph(vector <std::pair <int, int> > * pAdj)
 {
 	if(pAdj == nullptr)
 	{
@@ -154,14 +158,21 @@ void Graph::buildGraph(vector <int> * pAdj)
 		for(int i = 0; i < getEdges(); i++)
 		{
 			int v1, v2;
+			int weight = 1;
 			
 			cout << "From Vertex : ";
 			cin >> v1;
 			cout << "To Vertex : ";
 			cin >> v2;
 
+			if(mIsWeighted)
+			{
+				cout << "Weight value : ";
+				cin >> weight;
+			}
+
 			// insert the edge from v1 and v2
-			(*(mpAdj + v1)).push_back(v2);
+			(*(mpAdj + v1)).push_back(std::make_pair(v2, weight));
 		}
 	}
 	else
@@ -183,7 +194,7 @@ void Graph::buildGraph(vector <int> * pAdj)
  * param: 	To vertex and From vertex.
  * return: 	None
  */
-void Graph::addEdge(unsigned int fromNode, unsigned int toNode)
+void Graph::addEdge(unsigned int fromNode, unsigned int toNode, int weight)
 {
 	if(mpAdj == nullptr)
 	{
@@ -199,7 +210,7 @@ void Graph::addEdge(unsigned int fromNode, unsigned int toNode)
 	{
 		for(int i = 0; i < (*(mpAdj + fromNode)).size(); i++)
 		{
-			if((*(mpAdj + fromNode)).at(i) == toNode)
+			if((*(mpAdj + fromNode)).at(i).first == toNode)
 			{
 				// edge already present in the graph
 				return;
@@ -207,12 +218,17 @@ void Graph::addEdge(unsigned int fromNode, unsigned int toNode)
 
 		}
 
+		if(mIsWeighted == false)
+		{
+			weight = 1;
+		}
+
 		// the edge is not present in the graph, add it now
-		(*(mpAdj + fromNode)).push_back(toNode);
+		(*(mpAdj + fromNode)).push_back(std::make_pair(toNode, weight));
 	}
 	else
 	{
-		cout << "Invalid vertices given, cannot add the edge. " << endl;
+		cout << "Invalid vertices, cannot add the edge. " << endl;
 	}
 }
 
@@ -232,10 +248,10 @@ void Graph::showAdjacencyList() const
 		{
 			for(int j = 0; j < (*(mpAdj + i)).size() - 1; j++)
 			{
-				cout << (*(mpAdj + i)).at(j) << " --> ";
+				cout << (*(mpAdj + i)).at(j).first << " --> ";
 			}
 
-			cout << (*(mpAdj + i)).at((*(mpAdj + i)).size() - 1) << endl;
+			cout << (*(mpAdj + i)).at((*(mpAdj + i)).size() - 1).first << endl;
 		}
 	}
 }
@@ -281,11 +297,11 @@ void Graph::breadthFirstSearch(unsigned int sourceNode)
 
 			cout << u << "  ";
 
-			vector <int> * Adj = (mpAdj + u);
+			vector <std::pair <int, int> > * Adj = (mpAdj + u);
 
 			for(int i = 0; i < (*Adj).size(); i++)
 			{
-				unsigned int w = (*Adj).at(i);
+				unsigned int w = (*Adj).at(i).first;
 
 				if(visited[w] == false)
 				{
@@ -329,11 +345,11 @@ void Graph::depthFirstSearchStack(unsigned int s, bool visited[], int parent[])
 		S.pop();
 
 		cout << u << "  ";
-		vector <int> * adj = (mpAdj + u);
+		vector <std::pair <int, int> > * adj = (mpAdj + u);
 
 		for(int i = 0; i < (*adj).size(); i++)
 		{
-			unsigned int w = (*adj).at(i);
+			unsigned int w = (*adj).at(i).first;
 			if(visited[w] == false)
 			{
 				S.push(u);
@@ -356,11 +372,11 @@ void Graph::depthFirstSearchRecursive(unsigned int s, bool visited[], int parent
 	visited[s] = true;
 	cout << s << "  ";
 
-	vector <int> * u = (mpAdj + s);
+	vector <std::pair <int, int> > * u = (mpAdj + s);
 
 	for(int i = 0; i < (*u).size(); i++)
 	{
-		unsigned int w = (*u).at(i);
+		unsigned int w = (*u).at(i).first;
 
 		if(visited[w] == false)
 		{
@@ -424,11 +440,11 @@ void Graph::topologicalSort(unsigned int vertex, bool visited[], std::stack<int>
 {
 	visited[vertex] = true;
 
-	vector <int> * u = (mpAdj + vertex);
+	vector <std::pair <int, int> > * u = (mpAdj + vertex);
 
 	for(int i = 0; i < (*u).size(); i++)
 	{
-		unsigned int w = (*u).at(i);
+		unsigned int w = (*u).at(i).first;
 
 		if(visited[w] == false)
 		{
@@ -490,6 +506,100 @@ void Graph::topologicalSort()
 	}
 }
 
+
+
+/*
+ * brief: 	Run single source shortest path algorithm i.e., Dijkstra's Algorithm from the given source node 
+ * param: 	Source node, unsigned int
+ * return: 	None
+ */
+void Graph::Dijkstra(unsigned int sourceNode)
+{
+	if(sourceNode < getVertices())
+	{
+		// given source node within the vertices in the Graph
+		// data structures for keeping track of distance, parent
+		int * distance = new int[getVertices()];
+		int * parent =  new int[getVertices()];
+
+		// Multiset to do the job of min-priority queue 
+		std::multiset<std::pair <int, int> > Q;
+
+		// default values for all the nodes
+		for(int i = 0; i < getVertices(); i++)
+		{
+			distance[i] = 999999999; 
+			parent[i] = 999999999; 
+		}
+
+		// set the values for the source node 
+		distance[sourceNode] = 0;
+
+		// push the source node in the queue
+		Q.insert(std::make_pair(sourceNode, 0));
+
+		// the traversal
+		while(!Q.empty())
+		{
+			std::pair<int, int> p = *Q.begin();
+
+			Q.erase(Q.begin());
+
+			unsigned int node = p.first;
+			vector <std::pair <int, int> > * Adj = (mpAdj + node);
+
+			for(int i = 0; i < (*Adj).size(); i++)
+			{
+				unsigned int u = (*Adj).at(i).first;
+				int weight = (*Adj).at(i).second;
+
+				int temp = distance[node] + weight;
+
+				if(temp < distance[u])
+				{
+					parent[u] = node;
+					distance[u] = temp;
+					Q.insert(std::make_pair(u, temp));
+				}
+			}
+		}
+
+		// show the shortest paths from source to all nodes 
+		for(int i = getVertices() - 1; i > 0; i--)
+		{
+			int v = i;
+			
+			// Stack to hold the node sequences 
+			std::stack <int> Q;
+
+			if(parent[v] != 999999999) 
+			{
+				while(v != 999999999) 
+				{
+
+					Q.push(v);
+					v = parent[v];
+				}
+			}
+
+			cout << "Shortest path from node " << sourceNode << " to node " << i << endl; 
+			while(!Q.empty())
+			{
+				cout << Q.top() << " ---> ";
+				Q.pop();
+			}
+			cout << endl;
+
+		}
+
+		delete distance;
+		delete parent;
+	}
+	else
+	{
+		cout << "Dijkstra : Invalid source vertex." << endl;
+	}
+}
 
 
 

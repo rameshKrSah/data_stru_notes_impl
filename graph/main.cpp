@@ -31,11 +31,11 @@ int main()
 	G.addEdge(4, 5);
 
 	G.showAdjacencyList();
-
-	cout << "Breadth first search with source node 0 " << endl;
-	G.breadthFirstSearch(0);
 	cout << endl;
 
+	cout << endl << "Breadth first search with source node 0 " << endl;
+	G.breadthFirstSearch(0);
+	cout << endl;
 
 	cout << "Depth first search with source node 0 " << endl;
 	G.depthFirstSearch(0);
@@ -43,6 +43,11 @@ int main()
 
 	cout << "Topological Ordering " << endl;
 	G.topologicalSort();
+	cout << endl;
+
+	cout << "Dijkstra From Node 0" << endl;
+	G.Dijkstra(0);
+	cout << endl;
 
 	return 0;
 

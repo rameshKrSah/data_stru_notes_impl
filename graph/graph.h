@@ -12,13 +12,14 @@ class Graph
 {
 	private:
 		// Adjacency list representation //
-		vector <int> * mpAdj;
+		vector <std::pair <int, int> > * mpAdj;
 		unsigned int mVertices;
 		unsigned int mEdges;
+		bool mIsWeighted;
 
 	public:
 		// Functions //
-		Graph(unsigned int V = 0, unsigned int E = 0);
+		Graph(unsigned int V = 0, unsigned int E = 0, bool isWeighted = false);
 
 		~Graph();
 
@@ -32,15 +33,17 @@ class Graph
 
 		unsigned int getEdges() const;
 
-		void buildGraph(vector <int> * pAdj = nullptr);
+		void buildGraph(vector <std::pair <int, int> > * pAdj = nullptr);
 
 		void showAdjacencyList() const;
 
 		void breadthFirstSearch(unsigned int sourceNode);
 
-		void addEdge(unsigned int fromNode, unsigned int toNode);
+		void addEdge(unsigned int fromNode, unsigned int toNode, int weight = 1);
 
 		void depthFirstSearch(unsigned int sourceNode);
+
+		void Dijkstra(unsigned int sourceNode);
 
 		void topologicalSort();
 
